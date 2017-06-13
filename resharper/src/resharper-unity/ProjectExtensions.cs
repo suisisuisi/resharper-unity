@@ -25,7 +25,6 @@ namespace JetBrains.ReSharper.Plugins.Unity
         {
             // Only VSTU adds the Unity project flavour. Unity + Rider don't, so we have to look at references
             // Project may have UnityProjectFlavor, but it is not a Unity-generated project. https://github.com/JetBrains/resharper-unity/issues/150
-            Shell.Instance.GetComponent<IProjectPropertiesRequest>();
             return project != null && project.HasSubItems("Assets")
                    && (project.HasFlavour<UnityProjectFlavor>() || ReferencesUnity(project));
         }
