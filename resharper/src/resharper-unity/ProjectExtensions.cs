@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
+using JetBrains.Metadata.Reader.API;
 using JetBrains.Metadata.Utils;
 using JetBrains.ProjectModel;
+using JetBrains.ProjectModel.Properties;
 using JetBrains.ReSharper.Plugins.Unity.ProjectModel.Properties.Flavours;
+using JetBrains.ReSharper.Resources.Shell;
 using JetBrains.Util;
 using JetBrains.Util.Reflection;
 
@@ -22,7 +25,8 @@ namespace JetBrains.ReSharper.Plugins.Unity
         {
             // Only VSTU adds the Unity project flavour. Unity + Rider don't, so we have to look at references
             // Project may have UnityProjectFlavor, but it is not a Unity-generated project. https://github.com/JetBrains/resharper-unity/issues/150
-            return project != null && project.ProjectFileLocation.ReadAllText2().Text.Contains("<BaseDirectory>Assets</BaseDirectory>") 
+            Shell.Instance.GetComponent<IProjectPropertiesRequest>();
+            return project != null && project.HasSubItems("Assets")
                    && (project.HasFlavour<UnityProjectFlavor>() || ReferencesUnity(project));
         }
 
